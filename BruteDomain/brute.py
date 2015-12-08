@@ -55,10 +55,10 @@ def server(start_domain, thread_num):
         i.start()
 
     time.sleep(60)
-    while domains_queue.qsize() == 0:
+    while domains_queue.qsize() > 0:
         time.sleep(60)
-        print 'BruteDomain finish !!!'
-        print '--------------------------------'
+    print 'BruteDomain finish !!!'
+    print '--------------------------------'
 
 def brute_worker():
     '''
@@ -82,6 +82,7 @@ def brute_worker():
                             ip_list.append(item)
                     ip_list = sorted(ip_list)
             except Exception as e:
+                print e
                 pass
             if ip_list == []:
                 continue
