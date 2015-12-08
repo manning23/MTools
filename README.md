@@ -1,6 +1,14 @@
 # MTools
 Some funny and useful tools.
 
+## Findme
+
+If you face some problems or make something funny idea, you can ask question in github.
+
+And if you want to email manning23, you can send email to 408468023@qq.com.
+
+:)
+
 ## BruteDomain
 
 BruteDomain can find some funny domains. You can use this tools do something cool.
