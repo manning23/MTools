@@ -13,12 +13,19 @@ You must install dnspython, so you can do this order in linux "pip install dnspy
 '''
 
 
+
+
+
+domains_queue = Queue.Queue()
+info_queue = Queue.Queue()
+next_prefix_list = sorted(list(set([i.replace('\r','').replace('\n','') for i in open("next_sub.txt")])))
+
 def generate_domain(start_domain = ""):
     '''
     Creat start urls
     '''
     prefix_list = sorted(list(set([i.replace('\r','').replace('\n','') for i in open("subnames_largest.txt")])))
-    next_prefix_list = sorted(list(set([i.replace('\r','').replace('\n','') for i in open("next_sub.txt")])))
+
     domain_list = []
     random.shuffle(prefix_list)
 
@@ -28,10 +35,6 @@ def generate_domain(start_domain = ""):
 
     domain_list = domain_list[::-1]
     return domain_list
-
-
-domains_queue = Queue.Queue()
-info_queue = Queue.Queue()
 
 def server(start_domain, thread_num):
     global domains_queue
@@ -82,10 +85,13 @@ def brute_worker():
                             ip_list.append(item)
                     ip_list = sorted(ip_list)
             except Exception as e:
-                print e
                 pass
-            if ip_list == []:
+            if ip_list == [] or len(ip_list) >= 3:
                 continue
+
+            for i in next_prefix_list:
+                new_domain = i + '.' + domain
+                domains_queue.put(new_domain)
 
             ip_str = ', '.join(ip_list)
             info = (domain,ip_str)
